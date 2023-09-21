@@ -1,32 +1,24 @@
-import { LightningElement,track } from 'lwc';
-import FName from '@salesforce/schema/Candidate__c.Full_Name__C';
-import PhoneNo from '@salesforce/schema/Candidate__c.PhoneNumber__c';
-import Email_ID from '@salesforce/schema/Candidate__c.EmailID__c';
-
+import { LightningElement,api,track } from 'lwc';
 import addNewCandidate from '@salesforce/apex/LWCApex.addNewCandidate';
 import { ShowToastEvent}  from 'lightning/platformShowToastEvent';
 
 export default class CreateCandidate extends LightningElement 
 {
-    @track studDetails = 
-    {
-        firstname:FName,
-        phone:PhoneNo,
-        email:Email_ID
-
-    };
+    @api FName;
+    @api PhoneNo;
+    @api Email_ID;
     
     handlechange(event)
     {
-        this.studDetails.firstname=event.target.value
+        this.FName=event.target.value;
     }
-    phonehandlechange(event)
+    Mobilehandlechange(event)
     {
-        this.studDetails.phone=event.target.value
+        this.PhoneNo=event.target.value;
     }
     Emailhandlechange(event)
     {
-        this.studDetails.email=event.target.value
+        this.Email_ID=event.target.value;
     }
 
     handleclick()
@@ -34,9 +26,9 @@ export default class CreateCandidate extends LightningElement
         addNewCandidate
         (
             {
-                cName:this.studDetails.firstname,
-                cEmail:this.studDetails.email,
-                cPhone:this.studDetails.phone
+                cName:this.FName,
+                cEmail:this.Email_ID,
+                cPhone:this.PhoneNo
 
             }
         ).then(result =>
